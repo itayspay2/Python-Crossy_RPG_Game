@@ -3,12 +3,18 @@
 
 # Gain access to the pygame library
 import pygame
+import os
+import sys
+
+
+
 
 
 SCREEN_TITLE = 'Crossy RPG'
 # Size of the screen
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 800
+
 
 
 # Color according to RGB codes
@@ -19,6 +25,10 @@ BLACK_COLOR = (0,0,0)
 clock = pygame.time.Clock()
 pygame.font.init()
 font = pygame.font.SysFont('comicsans',75)
+
+def goto(line) :
+    global lineNumber
+    line = lineNumber
 
 class Game:
     
@@ -70,7 +80,8 @@ class Game:
             for event in pygame.event.get():
                 # If we have a quit type event (exit out)then exit out of the game loop
                 if event.type == pygame.QUIT:
-                    is_game_over = True
+                    quit()
+                    
                 # Detect when key is pressed down
                 elif event.type == pygame.KEYDOWN:
                     # Move up if up key is pressed
@@ -140,8 +151,14 @@ class Game:
 
         if did_win:
             self.run_game_loop(level_speed + 1)
-        else:
-            return
+        elif is_game_over == True:
+            self.run_game_loop(level_speed - 1)
+            
+            
+            
+                
+        
+            
 
 
 
@@ -237,9 +254,3 @@ new_game.run_game_loop(1)
 # Quit pygame and the program
 pygame.quit()
 quit()
-
-
-
-
-
-
