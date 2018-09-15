@@ -26,9 +26,7 @@ clock = pygame.time.Clock()
 pygame.font.init()
 font = pygame.font.SysFont('comicsans',75)
 
-def goto(line) :
-    global lineNumber
-    line = lineNumber
+
 
 class Game:
     
