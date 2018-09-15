@@ -27,7 +27,6 @@ pygame.font.init()
 font = pygame.font.SysFont('comicsans',75)
 
 
-
 class Game:
     
     # Typical rate of 60, equilvalent to FPS
@@ -51,6 +50,7 @@ class Game:
         is_game_over = False
         direction = 0
         did_win = False
+        
         
 
 
@@ -94,8 +94,11 @@ class Game:
                     # Stop movement when key no longer pressed
                     if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                         direction = 0
-                        
+                        direction2 = 0
+
+
                 print(event)
+            
 
             # Redraw the screen to be a blank white window
             self.game_screen.fill(WHITE_COLOR)
@@ -131,8 +134,26 @@ class Game:
                 pygame.display.update()
                 clock.tick(1)
                 break
+
+            if player_character.detect_collision(enemy_1):
+                is_game_over = True
+                did_win = False
+                text = font.render('You Lose',True, BLACK_COLOR)
+                self.game_screen.blit(text,(300,350))
+                pygame.display.update()
+                clock.tick(1)
+                break
+
+            if player_character.detect_collision(enemy_2):
+                is_game_over = True
+                did_win = False
+                text = font.render('You Lose',True, BLACK_COLOR)
+                self.game_screen.blit(text,(300,350))
+                pygame.display.update()
+                clock.tick(1)
+                break
                 
-            elif player_character.detect_collision(treasure):
+            if player_character.detect_collision(treasure):
                 is_game_over = True
                 did_win = True
                 text = font.render('You Win',True, BLACK_COLOR)
@@ -188,11 +209,12 @@ class PlayerCharacter(GameObject):
         super().__init__(image_path, x, y, width, height)
 
     # Move function will move character up if direction > 0 and down if < 0
-    def move(self, direction, max_height):
+    def move(self, direction,max_height):
         if direction > 0:
             self.y_pos -= self.SPEED
         elif direction < 0:
             self.y_pos += self.SPEED
+
 
         # Make sure the character never goes past the bottom of the screen  
         if self.y_pos >= max_height - 40:
